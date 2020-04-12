@@ -1,0 +1,41 @@
+# check python version
+python --version
+
+# intall tool virtualenv
+pip install virtualenv
+
+# create project directory
+mkdir hello
+cd hello
+virtualenv -p /usr/local/bin/python3 env
+
+# activate environment
+source env/bin/activate
+
+# install django
+pip install django
+
+# create the project files for django
+cd hello
+django-admin startproject helloapp
+
+# do change settings... and ao on
+vi settings.py
+
+# create the app named howdy, creates dir for app including needed django app files
+python manage.py startapp howdy
+
+cd helloapp/
+python manage.py startapp howdy
+
+# call migrate for django there are already some data model adoptions there. migrate
+# makes db changes easy.
+python manage.py migrate
+
+# start server again there should be no warnings
+python manage.py runserver
+
+# create a .gitignore file to ignore temporary cache files
+cd __pycache__/
+echo "*" > .gitignore
+cat .gitignore
