@@ -7,6 +7,10 @@ class HomePageView(TemplateView):
     def get(self, request, **kwargs):
         return render(request, 'index.html', context=None)
 
-# Add this view
+# Add About view
 class AboutPageView(TemplateView):
     template_name = "about.html"
+
+# Add Alive view
+class AlivePageView(TemplateView):
+    template_name = "alive.html"
