@@ -5,10 +5,32 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: Build
     task:
       jobs:
         - name: 'Job #1'
           commands:
             - sem-version python 3.7
             - checkout
+  - name: Test
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - checkout
+          - cache restore
+      jobs:
+        - name: Unit Tests
+          commands:
+            - cd helloapp
+            - python manage.py makemigrations
+            - python manage.py migrate
+            - python manage.py test
+        - name: Checklist
+          commands:
+            - cd helloapp
+            - python manage.py check --deploy
+        - name: Stylecheck
+          commands:
+            - pip install flake8
+            - flake8 helloapp/ --max-line-length=127
