@@ -8,7 +8,7 @@ blocks:
           commands:
             - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
             - 'docker pull $DOCKER_USERNAME/django-helloapp:latest || true'
-            - 'docker build --cache-from=$DOCKER_USERNAME/django-helloapp:latest -t $DOCKER_USERNAME/django-markdown-editor:latest .'
+            - 'docker build --cache-from=$DOCKER_USERNAME/django-helloapp:latest -t $DOCKER_USERNAME/django-helloapp:latest .'
             - 'docker push $DOCKER_USERNAME/django-helloapp:latest'
       secrets:
         - name: dockerhub
