@@ -37,4 +37,5 @@ blocks:
         - name: Stylecheck
           commands:
             - pip install flake8
+            - cd helloapp
             - flake8 helloapp/ --max-line-length=127
