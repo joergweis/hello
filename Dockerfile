@@ -21,6 +21,6 @@ RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
 RUN chown -R www-data:www-data /opt/app
 
 # expose server port on port 8020 and call start server script
-EXPOSE 8020
+EXPOSE 8030
 STOPSIGNAL SIGTERM
 CMD ["/opt/app/start-server.sh"]
