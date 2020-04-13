@@ -1,0 +1,32 @@
+version: v1.0
+name: Pipeline 2
+blocks:
+  - name: Docker build
+    task:
+      jobs:
+        - name: Build
+          commands:
+            - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
+            - 'docker pull $DOCKER_USERNAME/django-helloapp:latest || true'
+            - 'docker build --cache-from=$DOCKER_USERNAME/django-helloapp:latest -t $DOCKER_USERNAME/django-markdown-editor:latest .'
+            - 'docker push $DOCKER_USERNAME/django-helloapp:latest'
+      secrets:
+        - name: dockerhub
+      env_vars:
+        - name: FOO_1
+          value: BAR_1
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - checkout
+          - cache restore
+          - mkdir -p .pip_cache
+          - pip install --cache-dir .pip_cache -r requirements.txt
+          - cd helloapp
+          - 'python manage.py makemigrations '
+          - python manage.py migrate
+          - cd ..
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
